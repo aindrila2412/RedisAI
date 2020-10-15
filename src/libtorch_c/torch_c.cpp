@@ -332,6 +332,14 @@ extern "C" void* torchCompileScript(const char* script, DLDeviceType device, int
   return ctx;
 }
 
+extern "C" void* torchSetThreadAllocations(long long inter_op_num_threads, long long intra_op_num_threads)
+{
+    // TODO: Exception handling
+    torch::set_num_threads((int)intra_op_num_threads);
+    torch::set_num_interop_threads((int)inter_op_num_threads);
+    return NULL;
+}
+
 extern "C" void* torchLoadModel(const char* graph, size_t graphlen, DLDeviceType device, int64_t device_id,
                                 char **error, void* (*alloc)(size_t))
 {
@@ -340,7 +348,7 @@ extern "C" void* torchLoadModel(const char* graph, size_t graphlen, DLDeviceType
   ModuleContext* ctx = new ModuleContext();
   ctx->device = device;
   ctx->device_id = device_id;
-  try {
+  try {ct.
     // TODO: move to device now
     auto module = std::make_shared<torch::jit::script::Module>(torch::jit::load(graph_stream));
     auto aten_device_type = getATenDeviceType(device);

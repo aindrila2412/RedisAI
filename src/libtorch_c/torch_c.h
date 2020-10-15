@@ -16,6 +16,8 @@ DLManagedTensor* torchNewTensor(DLDataType dtype, long ndims,
 void* torchCompileScript(const char* script, DLDeviceType device, int64_t device_id,
                          char **error, void* (*alloc)(size_t));
 
+void* torchSetThreadAllocations(long long inter_op_num_threads, long long intra_op_num_threads);
+
 void* torchLoadModel(const char* model, size_t modellen, DLDeviceType device, int64_t device_id,
                      char **error, void* (*alloc)(size_t));
 
